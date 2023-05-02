@@ -40,18 +40,23 @@ def get_stats():
     # Extract the data from the API response
     try:
         data = response.json()
-        height = data["height_feet"] + data["height_inches"]
-        weight = data["weight_pounds"]
     except KeyError:
         result_label.config(text="No results found.")
         return
 
     # Display the data in the result label
-    result_label.config(text=f"{player_name}'s Height: {height} inches\n{player_name}'s Weight: {weight} pounds")
+    result_label.config(text=f"Name: {data['first_name']} {data['last_name']}\n")
+    if "height_feet" in data and "height_inches" in data:
+        total_inches = int(data["height_feet"]) * 12 + int(data["height_inches"])
+        result_label.config(text=result_label.cget("text") + f"Height: {total_inches} in\n")
+    else:
+        result_label.config(text=result_label.cget("text") + "Height: Unknown\n")
+    result_label.config(text=result_label.cget("text") + f"Weight: {data['weight_pounds']} lbs\n")
+    result_label.config(text=result_label.cget("text") + f"Current Team: {data['team']['full_name']}\n")
 
 # Create the GUI
 window = tk.Tk()
-window.title("NBA Statistics")
+window.title("NBA Player Information")
 
 # Create the player name input field
 player_name_label = tk.Label(window, text="Enter Player Name:")
@@ -60,7 +65,7 @@ player_name_entry = tk.Entry(window)
 player_name_entry.pack()
 
 # Create the button to get the stats
-get_stats_button = tk.Button(window, text="Get Player Info", command=get_stats)
+get_stats_button = tk.Button(window, text="Get Information", command=get_stats)
 get_stats_button.pack()
 
 # Create the label to display the results

@@ -98,12 +98,12 @@ class App(tk.Tk):
 
         result = tk.Label(nba_window, text="")
         result.config(font=("TkDefaultFont", 20))
-        # pack widgets for NFL screen
+        # pack widgets for NBA screen
         
         result.pack(pady = 20)
 
     def show_player_info(self):
-        # create new window for NFL screen
+        # create new window for NBA screen
         player_window = tk.Toplevel(self)
         player_window.title("Player Info")
         player_window.geometry("400x170")
